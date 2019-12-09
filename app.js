@@ -61,14 +61,36 @@ const flag = [
     }
 ];
 
-const manager;
-const intern;
-const engineer;
-const addNewTeamMember = false;
+var manager;
+var intern;
+var engineer;
+var addNewTeamMember = false;
 
 async function questions() {
     const answers = await inquirer.prompt(memberQuestions);
     if (answers.role === "Manager") {
-        manager = await inquirer.prompt(qu)
+        manager = await inquirer.prompt(questionManager);
+    }
+
+    if (answers.role === "Engineer") {
+        engineer = await inquirer.prompt(questionEngineer);
+    }
+
+    if (answers.role === "Intern") {
+        intern = await inquirer.prompt(questionIntern)
+    }
+
+    addNewTeamMember();
+}
+
+async function newTeamMember() {
+    const newEntry = await inquirer.prompt(flag);
+    if (newEntry.flag === true) {
+        questions();
     }
 }
+
+newTeamMember();
+
+
+
