@@ -1,59 +1,84 @@
 const inquirer = require("inquirer");
 const fs = require("fs");
 
-const memberQuestions = [
+var managerQuestions = [
    {
        type: "input",
        name: "name",
-       message: "What is the Name of the team member?"
+       message: "What is your name?"
    },
 
    {
        type: "input",
-       name: "name",
-       message: "What is the ID of the team member?"
+       name: "id",
+       message: "What is your ID?"
     },
 
     {
        type: "input",
        name: "E-mail",
-       message: "What is the E-mail of the team member?"
+       message: "What is your E-mail?"
     },
 
     {
-       type: "list",
-       name: "role",
-       message: "What is the role of the team member?",
-       choices: ["Manager", "Engineer", "Intern"]
+       type: "input",
+       name: "officeNo",
+       message: "What is your office number?",
+      
+    },
+];
+
+var engineerQuestions = [
+    {
+        type: "input",
+        name: "name",
+        message: "What is the name of the team member?"
     },
 
-];
-
-const questionManager = [
     {
         type: "input",
-        name: "officeNumber",
-        message: "What is the office number of team member?"
-    }
-];
+        name: "id",
+        message: "What is the ID of the team member?"
+    },
 
-const questionEngineer = [
     {
         type: "input",
-        name: "github", 
+        name: "E-mail",
+        message: "What is the E-mail of the team member?"
+    },
+
+    {
+        type: "input",
+        name: "gitHub",
         message: "What is the GitHub username of the team member?"
-    }
+    },
 ];
 
-const questionIntern = [
+var internQuestions = [
     {
+        type: "input",
+        name: "name",
+        message: "What is the name of the team member?"
+      },
+      {
+        type: "input",
+        name: "id",
+        message: "What is the ID of the team member?"
+      },
+      {
+        type: "input",
+        name: "email",
+        message: "What is the email of the team member?"
+      },
+      {
         type: "input",
         name: "school",
         message: "What is the name of the school?"
-    }
+      }
+    
 ];
 
-const flag = [
+var flag = [
     {
         type: "confirm",
         name: "flag",
@@ -61,36 +86,44 @@ const flag = [
     }
 ];
 
-var manager;
-var intern;
-var engineer;
-var addNewTeamMember = false;
+var role = [
+    {
+      name: "role",
+      type: "list",
+      message: "What is the role of the team member that you would like to add?",
+      choices: ["Engineer", "Intern"]
+    }
+];
+
+var manager = [];
+var intern = [];
+var engineer = [];
+
 
 async function questions() {
-    const answers = await inquirer.prompt(memberQuestions);
-    if (answers.role === "Manager") {
-        manager = await inquirer.prompt(questionManager);
+    const answersManager = await inquirer.prompt(managerQuestions);
+    manager.push(answersManager);
+
+    while (true) {
+        const addNewTeamMember = await inquirer.prompt(flag);
+        if (addNewTeamMember.flag === false) {
+            break;
+        } else {
+            let newTeamMember = await inquirer.prompt(role);
+            if (newTeamMember.role === "Engineer") {
+                answersEngineer = await inquirer.prompt(engineerQuestions);
+                engineer.push(answersEngineer);
+            } else if (newTeamMember.role === "Intern") {
+                answersIntern = await inquirer.prompt(internQuestions);
+                intern.push(answersIntern);
+            }
+        }
     }
 
-    if (answers.role === "Engineer") {
-        engineer = await inquirer.prompt(questionEngineer);
-    }
-
-    if (answers.role === "Intern") {
-        intern = await inquirer.prompt(questionIntern)
-    }
-
-    addNewTeamMember();
+    console.log(manager, engineer, intern);
 }
 
-async function newTeamMember() {
-    const newEntry = await inquirer.prompt(flag);
-    if (newEntry.flag === true) {
-        questions();
-    }
-}
-
-newTeamMember();
+questions();
 
 
 
