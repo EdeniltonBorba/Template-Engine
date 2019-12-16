@@ -98,32 +98,27 @@ async function start() {
 
             console.log("Team add");
 
-            answers = await inquirer.prompt(addTeamMember_q);
+            answers = await inquirer.prompt(addTeamMemberQuestions);
 
-      while (answers.addTeamMember === "Yes") {
-        answers = await inquirer.prompt(employee_q);
+      while (answers.addTeamMemberQuestions === "Yes") {
+        answers = await inquirer.prompt(employeeQuestions);
 
         if (answers.role === "Intern") {
           team.push(
             new Intern(answers.name, answers.id, answers.email, answers.school)
           );
-          console.log("Intern added");
+          console.log("Intern add");
         } else if (answers.role === "Engineer") {
           team.push(
-            new Engineer(
-              answers.name,
-              answers.id,
-              answers.email,
-              answers.github
-            )
+            new Engineer(answers.name, answers.id, answers.email, answers.github)
           );
-          console.log("Engineer added");
+          console.log("Engineer add");
         }
-        answers = await inquirer.prompt(addTeamMember_q);
+        answers = await inquirer.prompt(addTeamMemberQuestions);
       }
-      // generate the html
+   
       let html = await render(team);
-      // save it to disk
+ 
       await fs.writeFile("./output/index.html", html);
     } else {
       console.log("Bye!");
