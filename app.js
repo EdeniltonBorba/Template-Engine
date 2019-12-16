@@ -1,29 +1,38 @@
 const inquirer = require("inquirer");
 const fs = require("fs");
 
+var init = [
+    {
+        type: "List",
+        name: "start",
+        message: "My team of engineers",
+        choices: ["Start", "Quit"]
+    }
+];
+
 var managerQuestions = [
    {
        type: "input",
        name: "name",
-       message: "What is your name?"
+       message: "What's the team manager's name?"
    },
 
    {
        type: "input",
        name: "id",
-       message: "What is your ID?"
+       message: "Enter their ID number:"
     },
 
     {
        type: "input",
        name: "E-mail",
-       message: "What is your E-mail?"
+       message: "Enter their E-mail address:"
     },
 
     {
        type: "input",
        name: "officeNo",
-       message: "What is your office number?",
+       message: "Enter their Office number:",
       
     },
 ];
