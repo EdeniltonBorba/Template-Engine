@@ -30,13 +30,13 @@ var managerQuestions = [
 
     {
        type: "input",
-       name: "E-mail",
+       name: "email",
        message: "Enter their E-mail address:"
     },
 
     {
        type: "number",
-       name: "officeNo",
+       name: "office",
        message: "Enter their Office number:",
       
     },
@@ -85,20 +85,22 @@ const employeeQuestions = [
   };
 
 async function start() {
-    try {
-        let answers = await inquirer.prompt(init);
+  try {
+    let answers = await inquirer.prompt(init);
 
-        if (answers.start === "Start") {
-            let team = [];
-            answers = await inquirer.prompt(managerQuestions);
+    if (answers.start === "Start") {
+            
+      let team = [];
+      answers = await inquirer.prompt(managerQuestions);
 
-            team.push(
-                new Manager(answers.name, answers.id, answers.email, answers.office)
-            );
+            
+      team.push(
+        new Manager(answers.name, answers.id, answers.email, answers.office)
+      );
 
-            console.log("Team add");
+      console.log("Team add");
 
-            answers = await inquirer.prompt(addTeamMemberQuestions);
+      answers = await inquirer.prompt(addTeamMemberQuestions);
 
       while (answers.addTeamMemberQuestions === "Yes") {
         answers = await inquirer.prompt(employeeQuestions);
