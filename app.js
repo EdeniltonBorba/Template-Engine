@@ -8,10 +8,10 @@ const Intern = require("./lib/Intern");
 
 var init = [
     {
-        type: "List",
-        name: "start",
-        message: "My team of engineers",
-        choices: ["Start", "Quit"]
+      name: "start",
+      message: "Hallo !!! let's build our team !!",
+      type: "list",
+      choices: ["Start", "Quit"]
     }
 ];
 
@@ -98,11 +98,11 @@ async function start() {
         new Manager(answers.name, answers.id, answers.email, answers.office)
       );
 
-      console.log("Team add");
+      console.log("Manager add");
 
       answers = await inquirer.prompt(addTeamMemberQuestions);
 
-      while (answers.addTeamMemberQuestions === "Yes") {
+      while (answers.addTeamMember === "Yes") {
         answers = await inquirer.prompt(employeeQuestions);
 
         if (answers.role === "Intern") {
@@ -186,36 +186,4 @@ start();
 
   
 
-
-
-
-
-/*
-
-async function questions() {
-    const answersManager = await inquirer.prompt(managerQuestions);
-    manager.push(answersManager);
-
-    while (true) {
-        const addNewTeamMember = await inquirer.prompt(flag);
-        if (addNewTeamMember.flag === false) {
-            break;
-        } else {
-            let newTeamMember = await inquirer.prompt(role);
-            if (newTeamMember.role === "Engineer") {
-                answersEngineer = await inquirer.prompt(engineerQuestions);
-                engineer.push(answersEngineer);
-            } else if (newTeamMember.role === "Intern") {
-                answersIntern = await inquirer.prompt(internQuestions);
-                intern.push(answersIntern);
-            }
-        }
-    }
-
-    console.log(manager, engineer, intern);
-}
-
-questions();
-
-*/
 
